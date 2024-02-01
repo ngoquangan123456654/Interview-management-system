@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <script type="text/javascript" th:src="@{/js/schedule.js}"></script>
+</head>
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full"
+     layout:fragment="content">
+
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper job-page">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">SCHEDULE</h4>
+
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Schedule
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Information schedule
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <form th:object="${scheduleDto}"
+                              th:action="@{/schedule/submit/{id}(id=${scheduleDto.getScheduleId()})}" method="post"
+                              class="form-horizontal">
+                            <div class="card-body ">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title">Create Interview Schedule</h4>
+                                    <div>
+                                        <button sec:authorize="hasAnyRole('ADMIN','RECRUITER','MANAGER')" type="button"
+                                                class="btn btn-danger text-white"
+                                                th:if="${!scheduleDto.getStatus().equals('Cancelled')}"
+                                                th:onclick="'cancelSchedule(\'' + ${scheduleDto.getScheduleId()}+ '\')'">
+                                            Cancel Schedule
+                                        </button>
+                                        <a th:if="${!scheduleDto.getStatus().equals('Cancelled')}"
+                                           class="btn btn-success text-white">Send reminder</a>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >Schedule title
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{title}" class="form-control border-0">alec-cv.pdf</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label "
+                                            >Candidate name
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{candidate.fullName}" class="form-control border-0">
+                                                    alec-cv.pdf</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >Schedule date
+                                            </label>
+                                            <div class="col-sm-9 input-group " style="width: 75%;">
+                                                <p th:text="*{scheduleDate}" class="form-control border-0">
+                                                    alec-cv.pdf</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >
+                                                Time
+                                            </label>
+                                            <div class="col-sm-9 d-flex">
+                                                <div>
+                                                    <div class="d-flex">
+                                                        <label
+                                                                class="control-label col-form-label"
+                                                        >
+                                                            From
+                                                        </label>
+                                                        <p th:text="*{scheduleTimeFrom}" class="form-control border-0">
+                                                            alec-cv.pdf</p>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <div class="d-flex">
+                                                        <label
+                                                                class="control-label col-form-label"
+                                                        >
+                                                            To
+                                                        </label>
+                                                        <p th:text="*{scheduleTimeTo}" class="form-control border-0">
+                                                            alec-cv.pdf</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label"
+                                            >Note</label>
+                                            <div class="col-sm-7">
+                                                <textarea id="note" sec:authorize="hasAnyRole('INTERVIEWER')"
+                                                          th:if="${!scheduleDto.getStatus().equals('Cancelled')}"
+                                                          th:field="*{note}" class="form-control"></textarea>
+                                                <p th:text="*{note}"
+                                                   sec:authorize="hasAnyRole('INTERVIEWER')"
+                                                   th:if="${scheduleDto.getStatus().equals('Cancelled')}"
+                                                   class="form-control border-0">alec-cv.pdf</p>
+                                                <p th:text="*{note}"
+                                                   sec:authorize="hasAnyRole('ADMIN','RECRUITER','MANAGER')"
+                                                   class="form-control border-0">alec-cv.pdf</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >Job
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{job}" class="form-control border-0">alec-cv.pdf</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Main Interviewer</label>
+
+                                            <div class="col-sm-9" style="margin-bottom: 18px;">
+                                                <span class="select2-container select2-container--default select2-container--below select2-container--focus select2-container--open"
+                                                      dir="ltr" data-select2-id="5" style="width: 100%;">
+                                                    <span class="selection">
+                                                        <span class="select2-selection select2-selection--multiple"
+                                                              style="border: none;" role="combobox" aria-haspopup="true"
+                                                              aria-expanded="true" tabindex="-1">
+                                                            <ul class="select2-selection__rendered">
+                                                                <li th:text="*{mainInterviewer}"
+                                                                    class="select2-selection__choice"
+                                                                    title="South Dakota" data-select2-id="79"><span
+                                                                        class="select2-selection__choice__remove"
+                                                                        role="presentation">×</span>South Dakota</li>
+                                                            </ul>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Other Interviewers</label>
+
+                                            <div class="col-sm-9" style="margin-bottom: 18px;">
+                                                <span class="select2-container select2-container--default select2-container--below select2-container--focus select2-container--open"
+                                                      dir="ltr" data-select2-id="5" style="width: 100%;">
+                                                    <span class="selection">
+                                                        <span class="select2-selection select2-selection--multiple"
+                                                              style="border: none;" role="combobox" aria-haspopup="true"
+                                                              aria-expanded="true" tabindex="-1">
+                                                            <ul class="select2-selection__rendered">
+                                                                <li th:each="s: *{interviewerList}" th:text="${s}"
+                                                                    class="select2-selection__choice"
+                                                                    title="South Dakota" data-select2-id="79"><span
+                                                                        class="select2-selection__choice__remove"
+                                                                        role="presentation">×</span>South Dakota</li>
+                                                            </ul>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >Location
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{location}" class="form-control border-0">alec-cv.pdf</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >Recruiter
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{recruiter}" class="form-control border-0">alec-cv.pdf</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label"
+                                            >Meeting ID
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{meetingId}" class="form-control border-0">alec-cv.pdf</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label"
+                                            >Result
+                                            </label>
+
+                                            <div class="col-sm-9">
+                                                <select sec:authorize="hasAnyRole('INTERVIEWER')" th:field="*{result}"
+                                                        th:if="${!scheduleDto.getStatus().equals('Cancelled')}"
+                                                        class="select2 form-select shadow-none"
+                                                        style="width: 100%; height: 36px">
+                                                    <option th:each="gen : ${T(fa.training.fjb04.ims.enums.Result).values()}"
+                                                            th:value="${gen}" th:text="${gen.name}"
+                                                    ></option>
+                                                </select>
+                                                <p sec:authorize="hasAnyRole('INTERVIEWER')"
+                                                   th:if="${scheduleDto.getStatus().equals('Cancelled')}"
+                                                   th:text="*{result}" class="form-control border-0">alec-cv.pdf</p>
+                                                <p sec:authorize="hasAnyRole('ADMIN','RECRUITER','MANAGER')"
+                                                   th:text="*{result}" class="form-control border-0">alec-cv.pdf</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label"
+                                            >Status
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{status}" class="form-control border-0">alec-cv.pdf</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border-top ">
+                                <div class="card-body">
+                                    <a sec:authorize="hasAnyRole('ADMIN','RECRUITER','MANAGER')"
+                                       th:href="@{/schedule/update/{id}(id=${scheduleDto.getScheduleId()})}"
+                                       class="btn btn-warning text-white">Edit
+                                    </a>
+                                    <button sec:authorize="hasRole('INTERVIEWER')"
+                                            th:if="${!scheduleDto.getStatus().equals('Cancelled')}"
+                                            type="submit" class="btn btn-success text-white">Submit result
+                                    </button>
+                                    <!--                                            th:if="${scheduleDto.getMainInterviewer().equals(principal.username)}"-->
+
+                                    <button type="button" class="btn btn-primary" onclick="history.back()">Cancel
+                                    </button>
+                                </div>
+                                <span th:errors="*{submit}"
+                                      class="form-message text-danger"></span>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Member Login</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!--===============================================================================================-->
+  <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+  <link rel="stylesheet" type="text/css" th:href="@{/css/fonts/font-awesome-4.7.0/css/font-awesome.min.css}">
+  <link rel="stylesheet" th:href="@{/css/css/main.css}">
+  <!--===============================================================================================-->
+</head>
+<body>
+
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <div class="login100-pic js-tilt" data-tilt>
+        <img th:src="@{img/images/login/img-01.png}" alt="IMG">
+      </div>
+
+      <form th:action="@{/do-login}" method="POST" class="login100-form validate-form">
+                <span class="login100-form-title">
+                    Member Login
+                </span>
+
+        <div class="wrap-input100 validate-input" data-validate = "Valid email is required: ex@abc.xyz">
+            <input class="input100" type="text" placeholder="Username" id="username" name="user">
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+            </span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate = "Password is required">
+            <input class="input100" type="password" placeholder="Password" id="password" name="pass">
+            <span class="focus-input100"></span>
+            <span class="symbol-input100">
+                <i class="fa fa-lock" aria-hidden="true"></i>
+            </span>
+        </div>
+
+          <div>
+              <input type="checkbox" value="lsRememberMe" id="rememberMe">
+              <label class="txt2" for="rememberMe">
+                  Remember me
+              </label>
+          </div>
+
+          <div class="text-center">
+              <div th:if="${param.error}" style="color: red">
+                  Invalid username or password.
+              </div>
+              <div th:if="${param.logout}" style="color: red">
+                  You have been logged out.
+              </div>
+          </div>
+
+          <div th:if="${message}" class="alert alert-success">
+              <p th:text="${message}" class="form-message text-danger"></p>
+          </div>
+
+          <div class="container-login100-form-btn">
+              <button type="submit" class="login100-form-btn">
+                Login
+              </button>
+        </div>
+
+        <div class="text-center p-t-12" style="padding-top: 12px; text-align: center;">
+            <a class="txt2" href="#" th:href="@{/forgot_password}">
+                Forgot Password?
+            </a>
+        </div>
+
+        <div class="text-center p-t-136" style="padding-top: 136px; text-align: center;">
+          <a class="txt2" href="#">
+
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script th:src="@{/js/login/jquery/jquery-3.2.1.min.js}"></script>
+<script th:src="@{/js/login/tilt/tilt.jquery.min.js}"></script>
+<script >
+    $('.js-tilt').tilt({
+        scale: 1.1
+    })
+</script>
+
+<script th:inline="javascript">
+    setTimeout(function() {
+        var alert = document.querySelector('.alert');
+        if (alert) {
+            alert.style.display = 'none';
+        }
+    }, 5000); // 5 giây
+</script>
+
+</body>
+</html>

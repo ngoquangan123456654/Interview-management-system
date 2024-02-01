@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}">
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full" layout:fragment="content">
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">OFFER</h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Offer
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Create
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <form th:action="@{/offer/edit/{id}(id=${editOffer.getId()})}"
+                              method="post" class="form-horizontal" th:object="${editOfferDTO}">
+                            <div class="card-body ">
+                                <h4 class="card-title">Personal Infomation</h4>
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+
+<!--                                        select Candidate-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Candidate<span class="text-danger"> *</span></label>
+                                            <div class="col-md-9">
+                                                <span th:text="${editOffer.getCandidate().fullName}" readonly></span>
+                                            </div>
+                                        </div>
+
+<!--                                        select Position-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Position<span class="text-danger"> *</span></label>
+                                            <div class="col-md-9">
+
+                                                <select class="select2 form-select shadow-none" name="position" style="width: 100%; height: 36px">
+
+                                                    <option value="">Select a Possion...</option>
+                                                    <option th:each="pos : ${T(fa.training.fjb04.ims.enums.Position).values()}"
+                                                            th:value="${pos.name()}" th:text="${pos.name}"
+                                                    th:selected="${pos.name==editOffer.getPosition().name}">
+                                                    </option>
+                                                </select>
+                                                <span th:errors="*{position}"
+                                                      class="form-message text-danger"></span>
+
+                                            </div>
+                                        </div>
+
+<!--                                        select Approver-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Approver<span class="text-danger"> *</span></label>
+                                            <div class="col-md-9">
+                                                <select class="select2 form-select shadow-none" name="approver" style="width: 100%; height: 36px">
+                                                    <option value="">Select a Approver...</option>
+                                                    <option th:each="appro : ${approvers}" th:value="${appro}" th:text="${appro}"
+                                                            th:selected="${appro==editOffer.getApprover().userName}"></option>
+                                                </select>
+                                                <span th:errors="*{approver}"
+                                                      class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Interview Info</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0" th:text="${editSchedule.getTitle()}"></p>
+                                                <!--  <p class="form-control border-0" th:text="${detailOffer.getI}"></p>-->
+                                                <span>Interviewer: </span>
+                                                <span style="color: red" th:text="${mainIntervew.getUserName()}"></span>
+                                                <span th:each="interview : ${listUser}" th:text="${interview.getUserName() + ' '}"></span>
+
+                                            </div>
+                                        </div>
+
+<!--                                        contract period-->
+                                        <div class="form-group row d-flex justify-content-between">
+                                            <label class="col-sm-3 text-end control-label col-form-label w-25" style="padding: 0px">
+                                                Contract Period<span class="text-danger"> *</span>
+                                            </label>
+                                            <div class="w-75">
+                                                <div class="d-flex justify-content-between ">
+                                                    <div class="col-sm-9 w-50 d-flex ">
+                                                        <label class="col-sm-3 text-start control-label col-form-label w-20">From</label>
+                                                        <input th:field="*{contractPeriodFrom}" type="date" class="form-control date-inputmask" id="From"/>
+                                                    </div>
+
+                                                    <div class="col-sm-9 w-50 d-flex">
+                                                        <label class="col-sm-3 text-start control-label col-form-label w-20">To</label>
+                                                        <input type="date" th:field="*{contractPeriodTo}" class="form-control date-inputmask" id="To"/>
+                                                    </div>
+                                                    <span th:errors="*{contractPeriodFrom}"
+                                                          class="form-message text-danger"></span>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+<!--                                        Interview Notes-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Interview Notes</label>
+                                            <div class="col-sm-9">
+                                                <span th:text="${editSchedule.getNote()}" readonly></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+<!--                                    right tag-->
+                                    <div class="col-md-6">
+<!--                                        Contract Type-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Contract Type<span class="text-danger"> *</span></label>
+                                            <div class="col-md-9">
+                                                <select class="select2 form-select shadow-none" name="contractType" style="width: 100%; height: 36px">
+                                                    <option value="">Select a type of contract...</option>
+                                                    <option th:each="contract : ${T(fa.training.fjb04.ims.enums.ContractType).values()}"
+                                                            th:value="${contract.name()}" th:text="${contract.name}"
+                                                    th:selected="${contract.name==editOffer.getContractType().name}">
+                                                    </option>
+                                                </select>
+                                                <span th:errors="*{contractType}" class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+
+<!--                                        Level-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Level<span class="text-danger"> *</span></label>
+                                            <div class="col-md-9">
+                                                <select class="select2 form-select shadow-none" name="level" style="width: 100%; height: 36px">
+                                                    <option value="">Select a level...</option>
+                                                    <option th:each="level : ${levels}" th:value="${level}" th:text="${level}"
+                                                    th:selected="${level==editOffer.getLevel().name}">
+                                                    </option>
+                                                </select>
+                                                <span th:errors="*{level}"
+                                                      class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+
+<!--                                        Department-->
+                                        <div class="form-group row">
+                                        <label class="col-sm-3 text-end control-label col-form-label">Department<span class="text-danger"> *</span></label>
+                                        <div class="col-md-9">
+                                            <select class="select2 form-select shadow-none" name="department" style="width: 100%; height: 36px">
+                                                <option value="">Select a department...</option>
+                                                <option th:each="department : ${T(fa.training.fjb04.ims.enums.Department).values()}"
+                                                        th:value="${department.name()}" th:text="${department.name}"
+                                                        th:selected="${department.name==editOffer.getDepartment().name}">
+                                                </option>
+                                            </select>
+                                            <span th:errors="*{department}"
+                                                  class="form-message text-danger"></span>
+                                        </div>
+                                    </div>
+
+<!--                                        Recruiter Owner-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Recruiter Owner<span class="text-danger"> *</span></label>
+                                            <div class="col-md-9">
+                                                <select class="select2 form-select shadow-none" name="recuiterOwner" style="width: 100%; height: 36px">
+                                                    <option value="">Select a Recruiter Owner...</option>
+                                                    <option th:each="recruiter : ${recruiterOwners}"
+                                                            th:value="${recruiter}" th:text="${recruiter}"
+                                                            th:selected="${recruiter==editOffer.getRecruiter().userName}"
+                                                    >
+                                                    </option>
+                                                </select>
+                                                <span th:errors="*{recuiterOwner}"
+                                                      class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+
+<!--                                        Due Date-->
+                                        <div class="form-group row">
+                                            <label for="end-date"
+                                                   class="col-sm-3 text-end control-label col-form-label">Due Date<span class="text-danger"> *</span>
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input type="date" th:field="*{dueDate}" class="form-control date-inputmask" id="end-date"/>
+                                                <span th:errors="*{dueDate}"
+                                                      class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+
+<!--                                        Basic Salary-->
+                                        <div class="form-group row">
+                                            <label for="salary" class="col-sm-3 text-end control-label col-form-label">
+                                            Basic Salary<span class="text-danger"> *</span>
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control"
+                                                       id="salary" th:field="*{basicSalary}"
+                                                       placeholder="Enter basic salary"/>
+                                                <span th:errors="*{basicSalary}"
+                                                      class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+
+<!--                                        Note-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Note</label>
+                                            <div class="col-sm-9">
+                                                <textarea th:field="*{note}" type="text" class="form-control" id="note">
+                                                </textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <div class="border-top ">
+                                <div class="card-body">
+                                    <button type="submit" class="btn btn-success text-white">Submit</button>
+
+                                    <a href="/offer"><button type="button" class="btn btn-danger">Cancel</button></a>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

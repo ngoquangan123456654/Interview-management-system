@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <script type="text/javascript" defer th:src="@{/js/candidate.js}"></script>
+</head>
+<style>
+    .form--skill-input .mult-select-tag {
+        display: none;
+    }
+</style>
+
+<!--multichoice-->
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css">
+</head>
+<!--multichoice-->
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full" layout:fragment="content">
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">CANDIDATE</h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Candidate
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Create
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <form method="post" class="form-horizontal" th:object="${candidateAdd}"
+                              enctype="multipart/form-data" th:action="@{/candidate/add}">
+                            <div class="card-body ">
+                                <h4 class="card-title">Personal Information</h4>
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="fname" class="col-sm-3 text-end control-label col-form-label required">Full Name</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" th:field="*{fullName}" class="form-control" id="fullname" placeholder="Type a name..." />
+                                                <span class="text-danger" th:errors="*{fullName}"></span>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="fname" class="col-sm-3 text-end control-label col-form-label required">B.O.D
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input th:field="*{dateOfBirth}" type="date" class="form-control date-inputmask" id="date-mask"/>
+                                                <span class="text-danger" th:errors="*{dateOfBirth}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label required">Phone number</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" th:field="*{phoneNumber}" class="form-control" id="phone" placeholder="Type a number..."/>
+                                                <span class="text-danger" th:errors="*{phoneNumber}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="fname" class="col-sm-3 text-end control-label col-form-label required">Email</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" th:field="*{email}" class="form-control" id="email" placeholder="Type an email..." required/>
+                                                <span class="text-danger" th:errors="*{email}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label required">Address</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" th:field="*{address}" class="form-control" id="address" placeholder="Type an address..."/>
+                                                <span class="text-danger" th:errors="*{address}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label required">Gender</label>
+                                            <div class="col-md-9">
+                                                <select class="select2 form-select shadow-none" th:field="*{gender}" style="width: 100%; height: 36px" required>
+                                                    <option value="">Select a gender</option>
+                                                    <option th:each="gen : ${T(fa.training.fjb04.ims.enums.Gender).values()}"
+                                                            th:value="${gen.name}" th:text="${gen.name}"></option>
+                                                    <span class="text-danger" th:errors="*{gender}"></span>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body ">
+                                <h4 class="card-title">Professional Information</h4>
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+
+                                        <!--                                        fix CV-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">CV Attachment</label>
+                                            <div class="col-sm-9">
+                                                <div class="custom-file">
+                                                    <input  type="file" class="custom-file-input"
+                                                            th:field="*{cvAttachment}" id="validatedCustomFile" >
+                                                    <div class="invalid-feedback">
+                                                        Example invalid custom file feedback
+                                                    </div>
+                                                </div>
+                                                <span class="text-danger" th:errors="*{cvAttachment}"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label required">Position</label>
+                                            <div class="col-sm-9">
+                                                <select class="select2 form-select shadow-none" th:field="*{position}" required
+                                                        style="width: 100%; height: 36px">
+                                                    <option value="">Select a possion...</option>
+                                                    <option th:each="pos : ${T(fa.training.fjb04.ims.enums.Position).values()}"
+                                                            th:value="${pos.name}" th:text="${pos.name}"></option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label required">Skills</label>
+                                            <div class="col-sm-9 form--skill-input">
+                                                <select class="select2 form-select shadow-none mt-3" id="multipleSkill" th:field="*{skill}" required
+                                                        multiple="multiple" style="height: 36px; width: 100%" >
+                                                    <option th:each="skill : ${skills}"
+                                                            th:value="${skill}"
+                                                            th:text="${skill}">
+                                                    </option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label required">Recruiter</label>
+                                            <div class="col-sm-9">
+                                                <select name="user" class="select2 form-select shadow-none"
+                                                        style="width: 100%; height: 36px" id="user">
+                                                    <option value="">Recruiter name</option>
+                                                    <option th:each="recruiter : ${recruiters}"
+                                                            th:value="${recruiter}"
+                                                            th:text="${recruiter}"></option>
+                                                    a
+                                                </select>
+                                                <div type="button" sec:authorize="hasRole('RECRUITER')" href="#"
+                                                     class=""
+                                                     id="assign-me" th:data="${userLogin}" for="">Assign
+                                                    me.
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="fname" class="col-sm-3 text-end control-label col-form-label">Note</label>
+                                            <div class="col-sm-9">
+                                                <input th:field="*{note}" type="text" class="form-control" id="fname" placeholder="N/A"/>
+                                                <span class="text-danger" th:errors="*{note}"></span>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label required">Status</label>
+                                            <div class="col-sm-9">
+                                                <select class="select2 form-select shadow-none" required
+                                                        th:field="*{status}"  style="width: 100%; height: 36px">
+                                                    <option value="">Select a status</option>
+                                                    <option th:each="status : ${T(fa.training.fjb04.ims.enums.Status).values()}"
+                                                            th:value="${status.name}" th:text="${status.name}">Select
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="year" class="col-sm-3 text-end control-label col-form-label">
+                                                Years of experience</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="year" th:field="*{yearOfExperience}" type="number" min="0" step="1"
+                                                       value="2016" placeholder="Type a number"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Highest
+                                                level</label>
+                                            <div class="col-md-9">
+                                                <select class="select2 form-select shadow-none"
+                                                        th:field="*{highLevel}" style="width: 100%; height: 36px" required>
+                                                    <option value="">Select highest level...</option>
+                                                    <option th:each="hightLevelSmall : ${highLevels}"
+                                                            th:value="${hightLevelSmall}"
+                                                            th:text="${hightLevelSmall}">
+                                                    </option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top ">
+                                <div class="card-body">
+                                    <button th:field="*{submit}" type="submit" class="btn btn-success text-white">Submit</button>
+                                    <button type="reset" class="btn btn-warning">Reset</button>
+                                    <button onclick="history.back()" type="button" class="btn btn-danger">Cancel</button>
+
+                                    <div class="text-danger" th:errors="*{submit}"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--&lt;!&ndash;JS multichoice&ndash;&gt;-->
+<script src="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/js/multi-select-tag.js"></script>
+<script>
+    new MultiSelectTag('multipleSkill')  // id
+</script>
+<!--&lt;!&ndash;JS multichoice&ndash;&gt;-->
+
+</body>
+</html>

@@ -1,0 +1,165 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}">
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full"
+     layout:fragment="content">
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">USER</h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    User
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Create
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <form class="form-horizontal" method="post" th:object="${createUser}"
+                              th:action="@{/user/create-user}">
+                            <div class="card-body ">
+                                <h4 class="card-title">Create User</h4>
+
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="fullname"
+                                                   class="col-sm-3 text-end control-label col-form-label">Full Name
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="text" th:field="*{fullName}" class="form-control "
+                                                       id="fullname" placeholder="Type a name"/>
+                                                <span class="text-danger" th:errors="*{fullName}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="bob" class="col-sm-3 text-end control-label col-form-label">D.O.B
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input type="date" class="form-control date-inputmask"
+                                                       th:field="*{dateOfBirth}" id="bob" placeholder="Enter Date"/>
+                                                <span class="text-danger" th:errors="*{dateOfBirth}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Phone number
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="text" class="form-control" th:field="*{phoneNumber}"
+                                                       id="phone" placeholder="Type a number."/>
+                                                <span class="text-danger" th:errors="*{phoneNumber}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Role <span
+                                                    class="text-danger">*</span></label>
+                                            <div class="col-md-9">
+                                                <select class="select2 form-select shadow-none" th:field="*{role}"
+                                                        style="width: 100%; height: 36px">
+                                                    <option th:each="role : ${roles}" th:text="${role.roleName}"
+                                                            th:value="${role.roleName}"></option>
+                                                </select>
+                                                <span class="text-danger" th:errors="*{role}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Status <span
+                                                    class="text-danger">*</span></label>
+                                            <div class="col-md-9">
+                                                <select th:field="*{status}" class="select2 form-select shadow-none"
+                                                        style="width: 100%; height: 36px">
+                                                    <option th:each="status: ${statusUser}" th:text="${status.name}"
+                                                            th:value="${status}"></option>
+                                                </select>
+                                                <span class="text-danger" th:errors="*{status}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="email" class="col-sm-3 text-end control-label col-form-label">Email
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="email" th:field="*{email}" class="form-control" id="email"
+                                                       placeholder="Type a email."/>
+                                                <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Address <span
+                                                    class="text-danger">*</span></label>
+                                            <div class="col-sm-9">
+                                                <input type="text" th:field="*{address}" class="form-control"
+                                                       id="address" placeholder="Type a address."/>
+                                                <span class="text-danger" th:errors="*{address}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Gender <span
+                                                    class="text-danger">*</span></label>
+                                            <div class="col-md-9">
+                                                <select th:field="*{gender}" class="select2 form-select shadow-none"
+                                                        style="width: 100%; height: 36px">
+                                                    <option value="">Select a gender</option>
+                                                    <option th:each="gender: ${genders}" th:text="${gender.name}"
+                                                            th:value="${gender}"></option>
+                                                </select>
+                                                <span class="text-danger" th:errors="*{gender}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Department
+                                                <span class="text-danger">*</span></label>
+                                            <div class="col-md-9">
+                                                <select th:field="*{department}" class="select2 form-select shadow-none"
+                                                        style="width: 100%; height: 36px">
+                                                    <option value="">Type a department</option>
+                                                    <option th:each="department : ${departments}"
+                                                            th:text="${department.name}"
+                                                            th:value="${department}"></option>
+                                                </select>
+                                                <span class="text-danger" th:errors="*{department}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="note" class="col-sm-3 text-end control-label col-form-label">Note</label>
+                                            <div class="col-sm-9">
+                                              <textarea type="text" th:field="*{note}" class="form-control" id="note"
+                                                        placeholder="Type a note."></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top ">
+                                <div class="card-body">
+                                    <button type="submit" class="btn btn-success text-white">Submit</button>
+                                    <button type="reset" class="btn btn-warning">Reset</button>
+                                    <button onclick="history.back()" type="button" class="btn btn-danger">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

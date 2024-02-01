@@ -1,0 +1,104 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<header class="topbar" data-navbarbg="skin5" th:fragment="header">
+    <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+        <div class="navbar-header" data-logobg="skin5">
+            <a class="navbar-brand" th:href="@{/home}">
+                <b class="logo-icon ps-2">
+                    <img th:src="@{/img/images/logo-icon.png}" alt="homepage" class="light-logo" width="25"/>
+                </b>
+                <span class="logo-text ms-2">
+            <img th:src="@{/img/images/logo-text.png}" alt="homepage" class="light-logo"/>
+          </span>
+            </a>
+            <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                    class="ti-menu ti-close"></i></a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
+
+            <ul class="navbar-nav float-start me-auto">
+                <li class="nav-item d-none d-lg-block">
+                    <a class="nav-link sidebartoggler waves-effect waves-light" href="javascript:void(0)"
+                       data-sidebartype="mini-sidebar"><i class="mdi mdi-menu font-24"></i></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+
+                    </a>
+<!--                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">-->
+<!--                        <li><a class="dropdown-item" href="#">Action</a></li>-->
+<!--                        <li><a class="dropdown-item" href="#">Another action</a></li>-->
+<!--                        <li>-->
+<!--                            <hr class="dropdown-divider"/>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a class="dropdown-item" href="#">Something else here</a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+                </li>
+                <li class="nav-item search-box">
+                    <form class="app-search position-absolute">
+                        <input type="text" class="form-control" placeholder="Search &amp; enter"/>
+                        <a class="srh-btn"><i class="mdi mdi-window-close"></i></a>
+                    </form>
+                </li>
+            </ul>
+            <ul class="navbar-nav float-end">
+                <div class="d-flex flex-column position-absolute text-white align-items-end my-3" style="right: 5%">
+                    <span class="h5" style="margin-bottom: 0;" sec:authentication="principal.username"></span>
+                    <span sec:authentication="principal.department" style="font-style: italic;"></span>
+                </div>
+
+                <li class="nav-item dropdown">
+                    <a class="
+                  nav-link
+                  dropdown-toggle
+                  text-muted
+                  waves-effect waves-dark
+                  pro-pic
+                " href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img th:src="@{/img/images/users/1.jpg}" alt="user" class="rounded-circle" width="31"/>
+                    </a>
+                    <ul style="box-shadow: 0px 5px 20px rgba(0,0,0,0.3); right: 0!important; width: 190px;" class="dropdown-menu dropdown-menu-end  animated" aria-labelledby="navbarDropdown" >
+                        <a class="dropdown-item" th:href="@{'/user/view/' + ${userId}}" sec:authorize="hasRole('ADMIN')"><i class="mdi mdi-account me-1 ms-1"></i>
+                            My Profile
+                        </a>
+
+                        <a th:href="@{/change_password}" class="dropdown-item"><i class="mdi mdi-account-settings-variant me-1 ms-1"></i>
+                            Change password
+                        </a>
+
+                        <div class="dropdown-divider" style="margin: 0;border-top: 1px solid #e2e2e2;"></div>
+                        <a th:href="@{/exit}" class="dropdown-item" ><i class="fa fa-power-off me-1 ms-1"></i>
+                            Logout
+                        </a>
+
+
+<!--                        <div class="modal fade" id="logout" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">-->
+<!--                            <div class="modal-dialog">-->
+<!--                                <div class="modal-content">-->
+<!--                                    <div class="modal-header">-->
+<!--                                        <h5 class="modal-title" id="staticBackdropLabel">Log out</h5>-->
+<!--                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                                    </div>-->
+<!--                                    <div class="modal-body">-->
+<!--                                        <p> Are you sure you want to log out?</p>-->
+<!--                                    </div>-->
+<!--                                    <div class="modal-footer">-->
+<!--                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>-->
+<!--                                        <a type="submit" class="btn btn-primary" th:href="@{/exit}">OK</a>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+</body>
+
+</html>

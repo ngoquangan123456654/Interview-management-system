@@ -1,0 +1,15 @@
+
+version: '3.3'
+services:
+  ### MySQL Container
+  mysql:
+    container_name: ims_db
+    build:
+      context: .
+      args:
+        - MYSQL_DATABASE=ims_db
+        - MYSQL_USER=ims
+        - MYSQL_PASSWORD=S3crEt
+        - MYSQL_ROOT_PASSWORD=Str0ngP@ss
+    ports:
+      - "3306:3306"

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full"
+     layout:fragment="content">
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">Offer</h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Offer
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Detail
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="button-offer">
+                            <!--<a class="btn btn-success"
+                               th:href="@{approve-offer/{id}(id=${detailOffer.getId()})}"
+                               sec:authorize="hasAnyRole('ADMIN','MANAGER')"
+                               th:unless="${detailOffer.getStatus().equals('APPROVED_OFFER')}"
+                            >
+&lt;!&ndash;                                th:unless="${detailOffer.getStatus().equals('APPROVED_OFFER'&&'REJECTED_OFFER')}"&ndash;&gt;
+                                Approve
+                            </a>
+
+                            <a
+                                    class="btn btn-danger"
+                                    th:href="@{reject-offer/{id}(id=${detailOffer.getId()})}"
+                                    sec:authorize="hasAnyRole('ADMIN','MANAGER')">
+                                Reject
+                            </a>
+
+                            <a th:href="@{cancel-offer/{id}(id=${detailOffer.getId()})}"
+                               sec:authorize="hasAnyRole('ADMIN','RECRUITER','MANAGER')">
+                                <button class="btn btn-danger" id="cancel-offer">Cancel Offer</button>
+                            </a>-->
+
+                            <a th:href="@{send-offer/{id}(id=${detailOffer.getId()})}"
+                               sec:authorize="hasAnyRole('ADMIN','RECRUITER','MANAGER')"
+                               th:if="${sendButton}" th:text="${sendButton}" class="btn btn-primary">
+                            </a>
+
+                            <a th:if="${sentNotice}" th:text="${sentNotice}" class="btn text-primary"></a>
+
+                            <a th:href="@{approve-offer/{id}(id=${detailOffer.getId()})}"
+                               sec:authorize="hasAnyRole('ADMIN','MANAGER')"
+                               th:if="${approveButton}" th:text="${approveButton}" class="btn btn-success">
+                            </a>
+
+                            <a th:href="@{reject-offer/{id}(id=${detailOffer.getId()})}"
+                               sec:authorize="hasAnyRole('ADMIN','MANAGER')"
+                               th:if="${rejectButton}" th:text="${rejectButton}" class="btn btn-warning">
+                            </a>
+
+                            <a th:href="@{cancel-offer/{id}(id=${detailOffer.getId()})}"
+                               sec:authorize="hasAnyRole('ADMIN','RECRUITER','MANAGER')"
+                               th:text="${cancelButton}" class="btn btn-danger cancel">
+                            </a>
+
+                        </div>
+
+                        <form class="form-horizontal">
+
+                            <div class="card-body pb-0">
+                                <h4 class="card-title">Personal Infomation</h4>
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Candidate</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${detailOffer.getCandidate().fullName}"></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Position
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${detailOffer.getCandidate().position.name}"></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Approver</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${detailOffer.getApprover().fullName}"></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Interview
+                                                Info</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${scheduleDetail.getTitle()}"></p>
+                                                <!--                                                <p class="form-control border-0" th:text="${detailOffer.getI}"></p>-->
+                                                <span>Interviewer: </span>
+                                                <span style="color: red" th:text="${mainIntervew.getUserName()}"></span>
+                                                <span th:each="interview : ${listUser}"
+                                                      th:text="${interview.getUserName() + ' '}"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row d-flex justify-content-between">
+                                            <label class="col-sm-3 text-end control-label col-form-label w-25">
+                                                Contract Period
+                                            </label>
+                                            <div class="w-75">
+                                                <div class="d-flex justify-content-between ">
+                                                    <div class="col-sm-9 w-50 d-flex ">
+                                                        <label class="col-sm-3 text-start control-label col-form-label w-20">From</label>
+                                                        <!--                                                        <input type="text" class="form-control date-inputmask" th:text="${detailOffer.getContractPeriodFrom()}" id="From"/>-->
+                                                        <span id="From" style="padding: 7px"
+                                                              th:text="${detailOffer.getContractPeriodFrom()}"></span>
+
+                                                    </div>
+                                                    <div class="col-sm-9 w-50 d-flex">
+                                                        <label class="col-sm-3 text-start control-label col-form-label w-20">To</label>
+                                                        <span id="To" style="padding: 7px"
+                                                              th:text="${detailOffer.getContractPeriodTo()}"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Interview
+                                                Notes</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${detailOffer.getSchedule().note}"></p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Status</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${detailOffer.getStatus()}"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--                            right Tag-->
+
+                                    <div class="col-md-6">
+                                        <!--                                        Contract Type-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Contract
+                                                Type</label>
+                                            <div class="col-md-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${detailOffer.getContractType().name}"></p>
+                                            </div>
+                                        </div>
+
+                                        <!--                                        Level-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Level </label>
+                                            <div class="col-md-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${detailOffer.getLevel().name}"></p>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <!--                                        Department-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Department </label>
+                                            <div class="col-md-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${detailOffer.getDepartment().name}"></p>
+                                            </div>
+                                        </div>
+
+                                        <!--                                        Recruiter Owner-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Recruiter
+                                                Owner</label>
+                                            <div class="col-md-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${detailOffer.getRecruiter().fullName}"></p>
+                                            </div>
+                                        </div>
+
+                                        <!--                                        Due Date-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Due Date
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${detailOffer.getDueDate()}"></p>
+                                            </div>
+                                        </div>
+
+                                        <!--                                        Basic Salary-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">
+                                                Basic Salary
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0"
+                                                   th:text="${detailOffer.getBasicSalary()} + ' VND'"></p>
+                                            </div>
+                                        </div>
+
+                                        <!--                                        Note-->
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Note</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0" th:text="${detailOffer.getNote()}"></p>
+                                                <!-- <p class="form-control border-0" th:if="${detailOffer.getNote()} != null" th:text="${detailOffer.getNote()}"></p>
+                                                 <p class="form-control border-0" th:if="${detailOffer.getNote()} == null" th:text="'N/A'"></p>-->
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                                <div class="border-top ">
+                                    <div class="card-body">
+
+                                        <!--<a th:href="@{/offer/edit/{id}(id=${detailOffer.getId()})}">
+                                            <button type="button" class="btn btn-info">Edit</button>
+                                        </a>-->
+
+                                        <a class="btn btn-primary mb-2" style="margin-top: 10px"
+                                           th:href="@{/offer/edit/{id}(id=${detailOffer.getId()})}"
+                                           sec:authorize="hasAnyRole('ADMIN','MANAGER')"
+                                           th:if="${editButton}" th:text="${editButton}">
+                                        </a>
+
+                                        <a href="/offer">
+                                            <button type="button" class="btn btn-danger">Cancel</button>
+                                        </a>
+
+                                    </div>
+                                </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

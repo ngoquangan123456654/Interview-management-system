@@ -1,0 +1,131 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <script type="text/javascript" defer th:src="@{/js/candidate.js}"></script>
+</head>
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full"
+     layout:fragment="content">
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">CANDIDATE</h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Candidate
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    List
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Candidate List</h5>
+                            <div class="row align-items-center">
+                                <div class="col-sm-12 col-md-2">
+                                    <select id="recordPerPage" class="form-select form-select-sm"
+                                            aria-label=".form-select-sm example">
+                                        <option value="2">2</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <span>Record per page</span>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <form method="post" class="dataTables_filter form-group">
+                                        <label class="d-flex align-items-center">
+                                            <input type="search" id="searchInput" name="search"
+                                                   class="form-control form-control-sm w-100"
+                                                   placeholder="Search here...">
+                                            <select id="mySelect"
+                                                    class="form-control form-control-sm w-100 form-select shadow-none "
+                                                    style="margin-left: 10px; margin-right: 10px;">
+                                                <option value="">Select</option>
+                                                <option th:each="status : ${T(fa.training.fjb04.ims.enums.Status).values()}"
+                                                        th:value="${status}" th:text="${status.name}"></option>
+                                            </select>
+                                            <button class="btn btn-success text-white"
+                                                    onclick="searchText(event)">Search
+                                            </button>
+                                        </label>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12 col-md-12"
+                                     sec:authorize="hasAnyRole('ADMIN','RECRUITER','MANAGER')">
+                                    <label class="d-flex justify-content-start">
+                                        <button class="btn btn-success text-white">
+                                            <a class="text-white" th:href="@{/candidate/add}">Add new</a>
+                                        </button>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-bordered container-table">
+                                    <thead>
+                                    <tr>
+                                        <td class="table-primary">Name</td>
+                                        <td class="table-primary">Email</td>
+                                        <td class="table-primary">Phone No.</td>
+                                        <td class="table-primary">Current Position</td>
+                                        <td class="table-primary">Owner HR</td>
+                                        <td class="table-primary">Status</td>
+                                        <td class="table-primary" style="width: 94px;">Action</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row align-items-center">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="zero_config_info" role="status" aria-live="polite">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-7 ">
+                                    <div class="dataTables_paginate paging_simple_numbers">
+
+                                        <ul class="pagination justify-content-end">
+                                            <li id="prevBtn" class="paginate_button page-item previous disabled">
+                                                <a href="#" class="page-link">
+                                                    <i class="mdi mdi-chevron-left"></i>
+                                                </a>
+                                            </li>
+                                            <li id="nextBtn" class="paginate_button page-item next disabled">
+                                                <a href="#" class="page-link">
+                                                    <i class="mdi mdi-chevron-right"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

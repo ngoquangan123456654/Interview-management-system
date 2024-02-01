@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <script type="text/javascript" defer th:src="@{/js/schedule.js}"></script>
+</head>
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full"
+     layout:fragment="content">
+
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper job-page">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">SCHEDULE</h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Schedule
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Create schedule
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <form th:object="${scheduleDto}" th:action="@{/schedule/add}" method="POST"
+                              class="form-horizontal">
+                            <div class="card-body ">
+                                <h4 class="card-title">Create Interview Schedule</h4>
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label
+                                                    for="title"
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >Schedule title
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        th:field="*{title}"
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="title"
+                                                        placeholder="Type a title."
+                                                />
+                                                <span class="text-danger" th:errors="*{title}"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label
+                                                    for="schedule-candidate"
+                                                    class="col-sm-3 text-end control-label col-form-label "
+                                            >Candidate name
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <select th:field="*{candidate}" class="select2 form-select shadow-none"
+                                                        id="schedule-candidate" style="width: 100%; height: 36px">
+                                                    <option value="">Select</option>
+                                                    <option th:each="candidate : ${candidateList}"
+                                                            th:value="${candidate.getCandidateId()}" th:text="${candidate.fullName} + ' (' + ${candidate.email} + ')'">Alec Ngo
+                                                    </option>
+                                                </select>
+                                                <span class="text-danger" th:errors="*{candidate}"></span>
+
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label
+                                                    for="schedule-date"
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >Schedule date
+                                            </label>
+                                            <div class="col-sm-9 input-group " style="width: 75%;">
+                                                <div class="d-flex w-100">
+                                                    <input
+                                                            th:field="*{scheduleDate}"
+                                                            type="text"
+                                                            class="form-control datepicker-autoclose"
+                                                            placeholder="mm/dd/yyyy"
+                                                            id="schedule-date"
+                                                    />
+
+                                                    <div class="input-group-append">
+                                                    <span class="input-group-text h-100"
+                                                    ><i class="mdi mdi-calendar"></i
+                                                    ></span>
+                                                    </div>
+                                                </div>
+                                                <span class="text-danger" th:errors="*{scheduleDate}"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >
+                                                Time
+                                            </label>
+                                            <div class="col-sm-9 d-flex">
+                                                <div>
+                                                    <div class="d-flex">
+                                                        <label
+                                                                for="from"
+                                                                class="control-label col-form-label"
+                                                        >
+                                                            From
+                                                        </label>
+                                                        <input
+                                                                th:field="*{scheduleTimeFrom}"
+                                                                type="time"
+                                                                class="form-control col-sm-3"
+                                                                id="from"
+                                                                style="width: 120px; margin: 0 10px;"
+                                                        />
+                                                    </div>
+                                                    <span class="text-danger" th:errors="*{scheduleTimeFrom}"></span>
+                                                </div>
+
+                                                <div>
+                                                    <div class="d-flex">
+                                                        <label
+                                                                for="to"
+                                                                class="control-label col-form-label"
+                                                        >
+                                                            To
+                                                        </label>
+                                                        <input
+                                                                th:field="*{scheduleTimeTo}"
+                                                                type="time"
+                                                                class="form-control col-sm-3"
+                                                                id="to"
+                                                                style="width: 120px; margin: 0 10px;"
+                                                        />
+                                                    </div>
+                                                    <span class="text-danger" th:errors="*{scheduleTimeTo}"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    for="note"
+                                                    class="col-sm-3 text-end control-label col-form-label"
+                                            >Note</label
+                                            >
+                                            <div class="col-sm-9">
+                                                <textarea th:field="*{note}" id="note" class="form-control"></textarea>
+                                                <span class="" th:errors="*{note}"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label
+                                                    for="schedule-inp"
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >Job
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <select th:field="*{job}" class="select2 form-select shadow-none"
+                                                        style="width: 100%; height: 36px" id="schedule-inp">
+                                                    <option value="">Select</option>
+                                                    <option th:each="job : ${jobList}" th:value="${job}"
+                                                            th:text="${job}">Job 1
+                                                    </option>
+                                                </select>
+                                                <span class="text-danger" th:errors="*{job}"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label required">Interviewer</label>
+                                            <div class="col-sm-9">
+                                                <select
+                                                        th:field="*{interviewerList}"
+                                                        class="select2 form-select shadow-none mt-3"
+                                                        multiple="multiple"
+                                                        style="height: 36px; width: 100%"
+                                                >
+                                                    <option th:each="interviewer : ${interviewerList}"
+                                                            th:value="${interviewer}" th:text="${interviewer}">Van
+                                                    </option>
+                                                </select>
+                                                <span class="text-danger" th:errors="*{interviewerList}"></span>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    for="schedule-location"
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >Location
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        th:field="*{location}"
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="schedule-location"
+                                                        placeholder="Type a location."
+                                                />
+                                                <span class="text-danger" th:errors="*{location}"></span>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    for="recruiter"
+                                                    class="col-sm-3 text-end control-label col-form-label required"
+                                            >Recruiter</label
+                                            >
+                                            <div class="col-sm-9">
+                                                <select name="recruiter" class="select2 form-select shadow-none"
+                                                        id="recruiter" style="width: 100%; height: 36px">
+                                                    <option value="">Select</option>
+                                                    <option th:each="recruiterValue : ${recruiterList}"
+                                                            th:value="${recruiterValue}" th:text="${recruiterValue}"
+                                                         >
+                                                        Alec Ngo
+                                                    </option>
+
+                                                </select>
+                                                <div type="button" sec:authorize="hasRole('RECRUITER')" href="#"
+                                                     class="" id="assign-me" th:data="${userLogin}" for="">Assign
+                                                    me.
+                                                </div>
+                                                <span class="text-danger" th:errors="*{recruiter}"
+                                                      style="display: block;"></span>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label
+                                                    for="schedule-meeting"
+                                                    class="col-sm-3 text-end control-label col-form-label"
+                                            >Meeting ID
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input
+                                                        th:field="*{meetingId}"
+                                                        type="text"
+                                                        class="form-control"
+                                                        id="schedule-meeting"
+                                                />
+                                                <span class="" th:errors="*{meetingId}"></span>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border-top ">
+                                <div class="card-body">
+                                    <button type="submit" class="btn btn-success text-white">Submit</button>
+                                    <button type="reset" class="btn btn-warning">Reset</button>
+                                    <button onclick="history.back()" type="button" class="btn btn-danger">Cancel
+                                    </button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+
+</div>
+
+</body>
+</html>

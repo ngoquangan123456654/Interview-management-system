@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <style>
+        .page-link.active{
+            z-index: 3;
+            color: #fff;
+            background-color: #2962ff;
+            border-color: #2962ff;
+        }
+    </style>
+    <script type="text/javascript" defer th:src="@{/js/schedule.js}"> </script>
+</head>
+<body>
+<div id="main-wrapper" data-layout="vertical"  data-navbarbg="skin5"  data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full"
+     layout:fragment="content">
+
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">SCHEDULE</h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Schedule
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    List
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Schedule List</h5>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-3">
+                                    <div class="dataTables_length" >
+                                        <label class="d-flex align-items-center" style="width: 150px;">Show
+                                            <select id="search-quantity" name=""  class="form-control form-control-sm " style="width: 42px; margin-left: 4px; margin-right: 4px;">
+                                                <option value="10">10</option>
+                                                <option value="5">5</option>
+                                                <option value="15">15</option>
+                                                <option value="20">20</option>
+                                            </select>
+                                            schedules
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-9">
+                                    <form class="dataTables_filter form-group">
+                                        <label class="d-flex align-items-center">
+                                            <input id="search-text" type="search" class="form-control form-control-sm w-100" placeholder="Search here...">
+
+                                            <select id="search-interviewer" name=""  class="form-control form-control-sm form-select shadow-none " style="margin-left: 10px; width: 30%;">
+                                                <option value="">Interviewer</option>
+                                                <option th:each="interviewer : ${interviewerList}" th:text="${interviewer}" th:value="${interviewer}">Id</option>
+                                            </select>
+
+                                            <select id="search-status" name=""  class="form-control form-control-sm form-select shadow-none " style="margin-left: 10px; width: 30%;">
+                                                <option value="">Status</option>
+                                                <option value="NEW">New</option>
+                                                <option value="INVITED">Invited</option>
+                                                <option value="INTERVIEWED">Interviewed</option>
+                                                <option value="CANCELLED">Cancelled</option>
+
+                                            </select>
+
+                                            <input id="search-btn" type="submit" class="btn btn-success text-white" style="margin-left: 10px;" value="Search">
+                                        </label>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="row" style="padding-left: 10px;">
+                                <a sec:authorize="hasAnyRole('RECRUITER', 'MANAGER', 'ADMIN')" th:href="@{/schedule/add}" class="btn btn-success text-white mb-3" style="width: 110px; float: right;">Add new</a>
+                            </div>
+
+                            <div class="table-responsive table-wrap">
+                                <table
+                                        id="schedule-table"
+                                        class="table table-hover table-bordered container-table"
+                                >
+
+                                    <thead>
+                                    <tr style="background-color: #eaf2f2">
+                                        <th>Title</th>
+                                        <th>Candidate</th>
+                                        <th>Interviewer</th>
+                                        <th>Schedule</th>
+                                        <th>Result</th>
+                                        <th>Status</th>
+                                        <th>Job</th>
+                                        <th style="width: 94px;">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="schedule-list">
+                                    <tr>
+                                        <td>Tiger Nixon</td>
+                                        <td>nixonchimnho@gmail.com</td>
+                                        <td>0123456789</td>
+                                        <td>Developer</td>
+                                        <td>AnNQ12</td>
+                                        <td>Fullstack developer</td>
+                                        <td>Waiting for interview</td>
+                                        <td>
+                                            <a href="#"><i class="mdi mdi-eye"></i></a>
+                                            <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
+                                            <a href="#"><i class="mdi mdi-arrange-send-backward"></i></a>
+                                        </td>
+                                    </tr>
+
+                                    </tbody>
+
+                                </table>
+                            <h5 style="display: none;" class="text-warning text-center text-uppercase schedule-empty-text">No result to show!</h5>
+                            </div>
+                            <div class="row align-items-center">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="zero_config_info" role="status" aria-live="polite">
+                                        Showing 10 of 60 schedules
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-7 ">
+                                    <div class="dataTables_paginate paging_simple_numbers" >
+                                        <ul class="pagination justify-content-end pagination-btn-wrap">
+                                            <li class="paginate_button page-item previous " >
+                                                <button id="prev-btn" href="#" class="page-link">
+                                                    Previous
+                                                </button>
+                                            </li>
+                                            <li class="paginate_button page-item d-flex" id="schedule-paging-num">
+                                                <a href="#" class="page-link">
+                                                    1
+                                                </a>
+                                                <a href="#" class="page-link">
+                                                    2
+                                                </a>
+                                            </li>
+                                            <li class="paginate_button page-item next " >
+                                                <button id="next-btn" href="#" class="page-link">
+                                                    Next
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End PAge Content -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+    </div>
+</div>
+
+
+</body>
+</html>

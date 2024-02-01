@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}">
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full" layout:fragment="content">
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+<!--            fix-->
+            <div class="col-12 d-flex no-block align-items-center">
+                <h3 class="page-title">JOB</h3>
+            </div>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="ms-auto text-end">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item active" aria-current="page" style="font-size: 1rem;">
+                                        Job List
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page" style="font-size: 1rem;">
+                                        Job Details
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+
+                        <p th:if="${showTodayInfo}" th:text="'Create on Today, last updated by ' + ${jobDetail.getCreatedBy()}" style="margin-bottom: 0"></p>
+                        <p th:if="${showOtherDayInfo}" th:text="'Create on ' +
+                        ${formatterDate} + ', last updated by ' + ${jobDetail.getCreatedBy()}" style="margin-bottom: 0"></p>
+
+                    </div>
+                </div>
+            </div>
+<!--            fix-->
+        </div>
+        <div class="container-fluid" style="padding: 0px 20px 0px 20px">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <form class="form-horizontal" th:object="${jobDetail}">
+                            <div class="card-body pb-0">
+                                <h4 class="card-title">Job Details</h4>
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Job Title
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0" th:text="${jobDetail.getTitle()}">Alec Ngo</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Start Date
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0" th:text="${jobDetail.getStartDate()}">24/12/2001</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Salary Range</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0" th:text="'From ' + ${jobDetail.getSalaryFrom()} + ' VND'
+                                                    + ' To ' + ${jobDetail.getSalaryTo()} + ' VND'">15000 VND</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label" style="white-space: nowrap">Working address</label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0" th:text="${jobDetail.getWorkingAddress()}">FPT Tower</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Status
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0" th:text="${jobDetail.getStatus()}">Draft</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+                                    <div class="col-md-6">
+
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Skills</label>
+                                            <div class="col-sm-9">
+                                                <ul style="margin-bottom: 0 !important;"
+                                                    th:each="skill : ${jobDetail.getJobSkillList()}">
+                                                    <li class="form-control border-0"
+                                                        th:text="${skill.getSkills().getName()}"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">End Date
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p class="form-control border-0" th:text="${jobDetail.getEndDate()}">30/12/2023</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Benefits</label>
+                                            <div class="col-sm-9">
+                                                <ul style="margin-bottom: 0 !important;"
+                                                    th:each="skill : ${jobDetail.getJobBenefitList()}">
+                                                    <li class="form-control border-0" th:text="${skill.getBenefit().getName()}"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Level</label>
+                                            <div class="col-md-9">
+                                                <ul style="margin-bottom: 0 !important;"
+                                                    th:each="skill : ${jobDetail.getJobLevelList()}">
+                                                    <li class="form-control border-0" th:text="${skill.getLevel().getName()}"></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Description</label>
+                                            <div class="col-md-9">
+                                                <p class="form-control border-0" th:text="${jobDetail.getDescription()}">N/A</p>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border-top ">
+                                <div class="card-body">
+                                    <a type="submit" class="btn btn-info" th:href="@{/job/update/{id} (id=${jobDetail.getId()})}">Edit</a>
+                                    <button type="button" class="btn btn-warning" onclick="history.back()">Cancel</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

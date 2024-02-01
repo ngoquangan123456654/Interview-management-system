@@ -1,0 +1,111 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}">
+<head>
+    <script type="text/javascript" defer th:src="@{/js/user.js}"></script>
+</head>
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full" layout:fragment="content" >
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">USER</h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    User
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    List
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">User List</h5>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-8">
+                                    <form method="post" class="dataTables_filter form-group" >
+                                        <label class="d-flex align-items-center">
+                                            <input type="search" id="searchInput" name="search"
+                                                   class="form-control form-control-sm w-100"
+                                                   placeholder="Search here...">
+                                            <select id="mySelect"
+                                                    class="form-control form-control-sm w-100 form-select shadow-none "
+                                                    style="margin-left: 10px; margin-right: 10px;">
+                                                <option value="">Select</option>
+                                                <option th:each="role : ${roles}" th:text="${role.roleName}" th:value="${role.roleName}"></option>
+                                            </select>
+                                            <button onclick="searchText(event)"  class="btn btn-success text-white" type="submit" >Search</button>
+                                        </label>
+                                    </form>
+                                </div>
+                                <div class="col-sm-12 col-md-1">
+                                    <select id="recordPerPage"  class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                        <option value="2">2</option>
+                                        <option value="10">10</option>
+                                        <option value="15">15</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-12 col-md-3">
+                                    <label class="d-flex justify-content-end">
+                                        <button  th:href="@{/user/show-form-create}" class="border border-dark rounded-circle">
+                                            <a class="text-white" th:href="@{/user/show-form-create}" >
+                                                <i class="fa-solid fa-plus text-dark"></i>
+                                            </a>
+                                        </button>
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-hover table-striped table-bordered container-table">
+                                    <thead>
+                                    <tr>
+                                        <td class="table-primary">UserName</td>
+                                        <td class="table-primary">Email</td>
+                                        <td class="table-primary">Phone No.</td>
+                                        <td class="table-primary">Role</td>
+                                        <td class="table-primary">Status</td>
+                                        <td class="table-primary" style="width: 94px;">Action</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                            <div class="row align-items-center">
+                                <div class="col-sm-12 col-md-5">
+                                    <div class="dataTables_info" id="zero_config_info" role="status" aria-live="polite">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-7 ">
+                                    <div class="dataTables_paginate paging_simple_numbers">
+                                        <ul class="pagination justify-content-end">
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="scripts">
+    <script type="text/javascript" th:src="@{/css/libs/jquery/dist/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/bootstrap/dist/js/bootstrap.bundle.min.js}"></script>
+    <!--    <script type="text/javascript" th:src="@{/css/libs/bootstrap/dist/js/bootstrap.js}"></script>-->
+    <script type="text/javascript"
+            th:src="@{/css/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/css/extra-libs/sparkline/sparkline.js}"></script>
+    <script type="text/javascript" th:src="@{/js/waves.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sidebarmenu.js}"></script>
+    <script type="text/javascript" th:src="@{/js/custom.min.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/flot/excanvas.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/flot/jquery.flot.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/flot/jquery.flot.pie.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/flot/jquery.flot.time.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/flot/jquery.flot.stack.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/flot/jquery.flot.crosshair.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/flot.tooltip/js/jquery.flot.tooltip.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/pages/chart/chart-page-init.js}"></script>
+
+
+    <script type="text/javascript" th:src="@{/css/libs/inputmask/dist/min/jquery.inputmask.bundle.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/pages/mask/mask.init.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/select2/dist/js/select2.full.min.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/select2/dist/js/select2.min.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/jquery-asColor/dist/jquery-asColor.min.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/jquery-asGradient/dist/jquery-asGradient.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/jquery-asColorPicker/dist/jquery-asColorPicker.min.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/jquery-minicolors/jquery.minicolors.min.js}"></script>
+    <script type="text/javascript"
+            th:src="@{/css/libs/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js}"></script>
+    <script type="text/javascript" th:src="@{/css/libs/quill/dist/quill.min.js}"></script>
+
+    <script>
+        //***********************************//
+        // For select 2
+        //***********************************//
+        $(".select2").select2();
+
+        /*colorpicker*/
+        $(".demo").each(function () {
+            //
+            // Dear reader, it's actually very easy to initialize MiniColors. For example:
+            //
+            //  $(selector).minicolors();
+            //
+            // The way I've done it below is just for the demo, so don't get confused
+            // by it. Also, data- attributes aren't supported at this time...they're
+            // only used for this demo.
+            //
+            $(this).minicolors({
+                control: $(this).attr("data-control") || "hue",
+                position: $(this).attr("data-position") || "bottom left",
+
+                change: function (value, opacity) {
+                    if (!value) return;
+                    if (opacity) value += ", " + opacity;
+                    if (typeof console === "object") {
+                        console.log(value);
+                    }
+                },
+                theme: "bootstrap",
+            });
+        });
+        /*datwpicker*/
+        jQuery(".mydatepicker").datepicker();
+        jQuery(".datepicker-autoclose").datepicker({
+            autoclose: true,
+            todayHighlight: true,
+        });
+        var quill = new Quill("#editor", {
+            theme: "snow",
+        });
+    </script>
+
+    <script th:inline="javascript">
+        setTimeout(function () {
+            var alert = document.querySelector('.alert');
+            if (alert) {
+                alert.style.display = 'none';
+            }
+        }, 5000); // 5 giây
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"
+            integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer th:inline="javascript">
+        /* Thêm cấu hình Toastr */
+        toastr.options = {
+            "closeButton": true, // Hiển thị nút đóng
+            "debug": false, // Hiển thị thông báo debug
+            "newestOnTop": false, // Hiển thị toast mới nhất ở phía trên
+            "progressBar": true, // Hiển thị thanh tiến độ
+            "positionClass": "toast-top-center", // Vị trí hiển thị
+            "preventDuplicates": false, // Ngăn chặn hiển thị các toast trùng lặp
+            "onclick": null, // Xử lý sự kiện khi click vào toast
+            "showDuration": "300", // Thời gian hiển thị (ms)
+            "hideDuration": "1000", // Thời gian ẩn (ms)
+            "timeOut": "5000", // Thời gian tự động ẩn (ms)
+            "extendedTimeOut": "1000", // Thời gian tự động ẩn khi chuột hover (ms)
+            //"showEasing": "swing", // Hiệu ứng hiển thị
+            //"hideEasing": "linear", // Hiệu ứng ẩn
+            //"showMethod": "fadeIn", // Phương thức hiển thị
+            "hideMethod": "fadeOut" // Phương thức ẩn
+        };
+        /* Bắt message từ controller */
+        var errorMessage = /*[[${errorMessage}]]*/ '';
+        var successMessage = /*[[${successMessage}]]*/ '';
+
+        /* Hiển thị thông báo Toastr nếu có message */
+        if (errorMessage) {
+            toastr.error(errorMessage);
+        }
+
+        if (successMessage) {
+            toastr.success(successMessage);
+        }
+    </script>
+</th:block>
+</body>
+</html>

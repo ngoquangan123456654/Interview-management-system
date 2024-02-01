@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registration Account</title>
+</head>
+<body>
+
+<p>This email is from IMS system </p>
+
+<span>  Your account has been created. Please use the following credential to login:</span>
+        <p>   • User name: <span th:text="${username}"></span></p>
+        <p>   • Password: <span th:text="${password}"></span></p>
+<p>If anything wrong, please reach-out recruiter <span th:text="${owner}"></span> . We are so sorry for this inconvenience.</p>
+
+<p>Thanks & Regards!</p>
+<p>IMS Team.</p>
+</body>
+</html>

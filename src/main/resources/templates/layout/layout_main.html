@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="keywords" content="admin dashboard"/>
+    <meta name="description" content="Admin Lite "/>
+    <meta name="robots" content="noindex,nofollow"/>
+    <title>Admin</title>
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/images/favicon.png}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+          integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+    <link type="text/css" th:href="@{/css/libs/flot/css/float-chart.css}" rel="stylesheet"/>
+    <link type="text/css" th:href="@{/css/libs/select2/dist/css/select2.min.css}" rel="stylesheet"/>
+    <link type="text/css" th:href="@{/css/libs/jquery-minicolors/jquery.minicolors.css}" rel="stylesheet"/>
+    <link type="text/css" th:href="@{/css/libs/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css}"
+          rel="stylesheet"/>
+    <link type="text/css" th:href="@{/css/libs/quill/dist/quill.snow.css}" rel="stylesheet"/>
+
+    <link type="text/css" th:href="@{/css/css/style.min.css}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.css"
+          integrity="sha512-oe8OpYjBaDWPt2VmSFR+qYOdnTjeV9QPLJUeqZyprDEQvQLJ9C5PCFclxwNuvb/GQgQngdCXzKSFltuHD3eCxA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <!--    <link type="text/css" th:href="@{/css/fonts/font_awesome.css}" rel="stylesheet" />-->
+
+
+    <!--Base css-->
+    <style>
+        .required::after {
+            content: ' *';
+            color: red;
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div
+        id="main-wrapper"
+        data-layout="vertical"
+        data-navbarbg="skin5"
+        data-sidebartype="full"
+        data-sidebar-position="absolute"
+        data-header-position="absolute"
+        data-boxed-layout="full"
+>
+    <header th:replace="~{fragments/header.html}"></header>
+    <aside th:replace="~{fragments/side_bar.html}"></aside>
+    <!--    <main id="main" class="main" >-->
+    <div layout:fragment="content">
+
+    </div>
+    <!--    </main>-->
+</div>
+
+<div th:replace="~{fragments/script.html :: scripts}"></div>
+</body>
+</html>

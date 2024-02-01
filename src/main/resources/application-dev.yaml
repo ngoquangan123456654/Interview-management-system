@@ -1,0 +1,44 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/interview_managerment
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    defer-datasource-initialization: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: duongduc1520@gmail.com
+    password: wcpx mhxb zmjb bxyh
+    properties:
+      mail:
+        debug: true
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl: yes
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+#  sql:
+#    init:
+#      mode: always
+#      data-locations: classpath:db/data.sql
+

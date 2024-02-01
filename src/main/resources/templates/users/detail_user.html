@@ -1,0 +1,140 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}">
+<head>
+    <script>
+
+    </script>
+</head>
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full"
+     layout:fragment="content">
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">USER</h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    User
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    User Detail
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <form class="form-horizontal" method="post" th:object="${userDetail}">
+                            <div class="card-body ">
+                                <div class="d-flex justify-content-end">
+                                    <div th:unless="${userDetail?.role == 'ADMIN'  and #authentication.principal != null and #authentication.principal.username == userDetail.getUserName()}">
+                                        <div th:if="${userDetail?.status == 'Active'}">
+                                            <a th:href="@{/user/deactivate/{id}(id=${userDetail.userId})}" class="border-0 btn btn-danger">Deactivate</a>
+                                        </div>
+
+                                        <div th:if="${userDetail?.status == 'Inactive'}">
+                                            <a th:href="@{/user/active/{id}(id=${userDetail.userId})}" class="border-0 btn btn-success">Activate</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Full
+                                                Name</label>
+                                            <div class="col-sm-9">
+                                                <p th:text="${userDetail.fullName}" class="form-control border-0"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">B.O.D
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p th:text="${#temporals.format(userDetail.dateOfBirth, 'dd/MM/yyyy')}"
+                                                   class="form-control border-0" id="dob"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Phone
+                                                number</label>
+                                            <div class="col-sm-9">
+                                                <p type="phone" th:text="${userDetail.phoneNumber}"
+                                                   class="form-control border-0"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Role</label>
+                                            <div class="col-md-9">
+                                                <p th:text="${userDetail.role}" class="form-control border-0"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Status</label>
+                                            <div class="col-md-9">
+                                                <p th:text="${userDetail.status}" class="form-control border-0"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Email</label>
+                                            <div class="col-sm-9">
+                                                <p th:text="${userDetail.email}" class="form-control border-0"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Address</label>
+                                            <div class="col-sm-9">
+                                                <p th:text="${userDetail.address}" class="form-control border-0"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Gender</label>
+                                            <div class="col-md-9">
+                                                <p th:text="${userDetail.gender}" class="form-control border-0"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Department</label>
+                                            <div class="col-md-9">
+                                                <p th:text="${userDetail.department}" class="form-control border-0"></p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Note</label>
+                                            <div class="col-sm-9">
+                                                <p th:text="${userDetail.note}" class="form-control border-0"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="border-top text-center">
+                                <div class="card-body">
+                                    <a type="submit" th:href="@{/user/edit/{id}(id=${userDetail.userId})}"
+                                       class="btn btn-success text-white">Edit
+                                    </a>
+                                    <a type="reset" class="btn btn-danger" th:href="@{/user}">Cancel</a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

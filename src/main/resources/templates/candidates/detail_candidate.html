@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <script type="text/javascript" defer th:src="@{/js/candidate.js}"></script>
+</head>
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full" layout:fragment="content">
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">CANDIDATE</h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Candidate
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Detail
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <form class="form-horizontal" th:object="${candidateDto}">
+                            <div class="card-body pb-0">
+                                <div class="d-flex justify-content-between">
+                                    <h4 class="card-title">Personal Information</h4>
+                                    <div class="d-flex">
+                                        <p th:field="*{createdDate}" th:text="'Created on ' + *{createdDate}"></p>
+                                        <p th:field="*{createdBy}" th:text="', last updated by ' + *{createdBy}"></p>
+                                    </div>
+                                </div>
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Full Name
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{fullName}" class="form-control border-0">Alec Ngo</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">B.O.D
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{dateOfBirth}" class="form-control border-0">24/12/2001</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Phone number</label>
+                                            <div class="col-sm-9">
+                                                <a th:text="*{phoneNumber}" th:href="|tel:*{phoneNumber}|" class="form-control border-0">0123456789</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Email</label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{email}" class="form-control border-0">alecanderngoquang@.com</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Address</label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{address}" class="form-control border-0">68 Fernando Torres .st</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Gender</label>
+                                            <div class="col-md-9">
+                                                <p th:text="*{gender}" class="form-control border-0">Male</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-body pb-0">
+                                <h4 class="card-title">Professional Information</h4>
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">CV Attachment</label>
+                                            <div class="col-sm-9">
+                                                <p th:text="${files}" class="form-control border-0">alec-cv.pdf</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Position</label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{position}" class="form-control border-0">Tech lead</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Skills</label>
+
+                                            <div class="col-sm-9">
+                                                <span class="select2-container select2-container--default select2-container--below select2-container--focus select2-container--open" dir="ltr" data-select2-id="5" style="width: 100%;">
+                                                    <span class="selection">
+                                                        <span class="select2-selection select2-selection--multiple" style="border: none;" role="combobox" aria-haspopup="true" aria-expanded="true" tabindex="-1" >
+                                                            <ul class="select2-selection__rendered">
+                                                                <li th:each="s: *{skill}" th:text="${s.toString()}" class="select2-selection__choice" title="South Dakota" data-select2-id="79"><span class="select2-selection__choice__remove" role="presentation">×</span>South Dakota</li>
+                                                            </ul>
+                                                        </span>
+                                                    </span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Recruiter</label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{user}" class="form-control border-0">AnNQ12</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Note</label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{note}" class="form-control border-0">Delicious</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Status
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{status}" class="form-control border-0">Available</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">
+                                                Years of experience</label>
+                                            <div class="col-sm-9">
+                                                <p th:text="*{yearOfExperience}" class="form-control border-0">1</p>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label  class="col-sm-3 text-end control-label col-form-label">Highest level</label>
+                                            <div class="col-md-9">
+                                                <p th:text="*{highLevel}" class="form-control border-0">Intern</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="border-top ">
+                                <div class="card-body">
+                                    <a th:href="@{/candidate/update/{id} (id = ${candidateDto.getCandidateId()})}" type="submit" class="btn btn-info" sec:authorize="hasAnyRole('ADMIN','RECRUITER','MANAGER')">Edit</a>
+                                    <button type="button" class="btn btn-warning" onclick="history.back()">Cancel</button>
+                                    <button th:onclick="'banCandidate(\'' + ${candidateDto.getCandidateId()}+ '\', event)'" class="btn btn-danger" th:if="${banned}" th:text="${banned}">Ban</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

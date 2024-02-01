@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}">
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full" layout:fragment="content" >
+    <div class="page-wrapper" style="min-height: 920px;">
+        <div class="page-breadcrumb" style="min-height: 740px;">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h1 class="page-title pb-4">Welcome our users!</h1>
+                </div>
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="pb-4">This is The Interviewer Schedule Management System</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="pull-left">
+                        <address>
+                            <h3>
+                                <b class="text-danger text-uppercase">Team 01 technology company limited</b>
+                            </h3>
+
+                            <p class="text-muted ">
+                                Hoa Lac Hi-Tech park, <br>
+                                Thach That district, <br>
+                                Ha Noi
+                            </p>
+                            <p class="mt-4">
+                                <b>Start Date :</b>
+                                <i class="mdi mdi-calendar"></i> 23rd Dec 2023
+                            </p>
+                            <p>
+                                <b>End Date :</b>
+                                <i class="mdi mdi-calendar"></i> 18th Jan 2024
+                            </p>
+                        </address>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <footer th:replace="~{fragments/footer.html}"></footer>
+
+    </div>
+
+</div>
+</body>
+</html>

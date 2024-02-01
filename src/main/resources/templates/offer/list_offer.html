@@ -1,0 +1,178 @@
+    <!DOCTYPE html>
+    <html lang="en" xmlns:th="http://www.thymeleaf.org"
+          xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+          layout:decorate="~{layout/layout_main.html}">
+    <head>
+        <script type="text/javascript" defer th:src="@{/js/offer.js}"></script>
+    </head>
+    <body>
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+         data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full" layout:fragment="content" >
+        <div class="page-wrapper">
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h3 class="page-title">Offer</h3>
+                        <div class="ms-auto text-end">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        Offer
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        List
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Offer List</h5>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <form id="search" class="dataTables_filter form-group">
+                                            <label class="d-flex align-items-center">
+                                                <input id="search-input" type="search" name="searchText" class="form-control form-control-sm"
+                                                       placeholder="Search here...">
+    <!--                                            <input type="search" name="search" class="form-control form-control-sm" placeholder="Search here...">-->
+                                                <select name="searchField" id="selectField" class="form-control form-control-sm w-50 form-select shadow-none "
+                                                        style="margin-left: 10px; margin-right: 10px;" >
+                                                    <option value="">Department</option>
+                                                    <option th:each="department : ${T(fa.training.fjb04.ims.enums.Department).values()}"
+                                                            th:value="${department}" th:text="${department.name}"></option>
+                                                </select>
+
+                                                <select name="searchStatus" id="selectedStatus" class="form-control form-control-sm w-50 form-select shadow-none "
+                                                        style="margin-left: 10px; margin-right: 10px;">
+                                                    <option value="">Status</option>
+                                                    <option th:each="status : ${T(fa.training.fjb04.ims.enums.Status).values()}"
+                                                            th:if="${status == T(fa.training.fjb04.ims.enums.Status).WAITING_FOR_APPROVAL ||
+                                                            status == T(fa.training.fjb04.ims.enums.Status).APPROVED_OFFER ||
+                                                            status == T(fa.training.fjb04.ims.enums.Status).REJECTED_OFFER ||
+                                                            status == T(fa.training.fjb04.ims.enums.Status).WAITING_FOR_RESPONSE ||
+                                                            status == T(fa.training.fjb04.ims.enums.Status).ACCEPTED_OFFER ||
+                                                            status == T(fa.training.fjb04.ims.enums.Status).DECLINED_OFFER ||
+                                                            status == T(fa.training.fjb04.ims.enums.Status).CANCELLED_OFFER}"
+                                                            th:value="${status}" th:text="${status.name}"></option>
+                                                </select>
+
+                                                <input id="search-button" value="Search"
+                                                       class="btn btn-success text-white">
+
+                                            </label>
+                                        </form>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                             <!--       <a th:href="@{/offer/add}" class="btn btn-success text-white">Add New</a>-->
+                                        <a>
+                                            <button class="btn btn-success text-white" onclick="showExport()">Export</button>
+                                        </a>
+    <!--                                    button Export-->
+
+                                </div>
+                                </div>
+
+                                <div class="table-responsive">
+                                    <table  class="table table-hover table-bordered container-table">
+
+                                        <thead>
+                                        <tr>
+                                            <th>Candidate Name</th>
+                                            <th>Email</th>
+                                            <th>Approver</th>
+                                            <th>Department</th>
+                                            <th>Notes</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        </thead>
+
+                                        <tbody>
+                                        <tr>
+                                            <td>Tiger Nixon</td>
+                                            <td>nixonchimnho@gmail.com</td>
+                                            <td>0123456789</td>
+                                            <td>Developer</td>
+                                            <td>AnNQ12</td>
+                                            <td>Waiting for interview</td>
+                                            <td>
+                                                <a href="#"><i class="mdi mdi-eye"></i></a>
+                                                <a href="#"><i class="mdi mdi-lead-pencil"></i></a>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                                <div class="row align-items-center">
+                                    <div class="col-sm-12 col-md-5">
+                                        <div class="dataTables_info" id="zero_config_info" role="status" aria-live="polite">
+                                            Showing 10 of 60 candidates
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-7 ">
+                                        <div class="dataTables_paginate paging_simple_numbers">
+
+                                  <!--          <li class="prev-button" onclick="prev(event)">Prev</li>-->
+
+    <!--                                        pagging-->
+                                            <div class="pagination">
+                                            <ul class="justify-content-end"></ul>
+                                            <div>
+    <!--                                        pagging-->
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                                    <!--                            export file:-->
+                                    <div class="form-popup modal-backdrop" id="export-offer" style="display: none; background-color: wheat">
+                                        <div class="background-export" onclick="hiddenExport()"></div>
+
+                                        <form class="form-export" method="post" th:action="@{/api/excel/download/contractPeriod}" >
+
+                                            <div class="d-flex justify-content-center align-items-center" >
+                                                <label class="mb-0"><b>Export Offer</b></label>
+                                            </div>
+
+<!--                                            <label><b>Export Offer</b></label><br>-->
+                                            <div class="d-flex gap-2 justify-content-center">
+                            <span> From
+                                <input type="date" id="startDate" name="startDate" class="form-control">
+                            </span>
+
+                                                <span> To
+                                <input type="date" id="endDate" name="endDate" class="form-control">
+                            </span>
+                                            </div>
+
+                                            <span class="d-flex justify-content-center">
+                            <input class="export-submit" type="submit" value="Submit" onclick="hiddenExport()">
+                            <input class="export-cancel" type="button" value="Cancel" onclick="hiddenExport()">
+                        </span>
+                                        </form>
+                                    </div>
+                                    <!--                            export file end-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    </body>
+    </html>

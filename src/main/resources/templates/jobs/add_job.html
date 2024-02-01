@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout_main.html}">
+<body>
+<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full"
+     layout:fragment="content">
+    <div class="page-wrapper">
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">JOB</h4>
+                    <div class="ms-auto text-end">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Job
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Create
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <form class="form-horizontal" th:object="${addJob}" th:action="@{/job/add}" method="post">
+                            <div class="card-body ">
+                                <h4 class="card-title">Personal Infomation</h4>
+                                <div class="d-flex">
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label for="fullname"
+                                                   class="col-sm-3 text-end control-label col-form-label required"> Job
+                                                title</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" th:field="*{title}" class="form-control"
+                                                       id="fullname"
+                                                       placeholder="Type a title"/>
+                                                <span th:errors="*{title}" class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="start-date"
+                                                   class="col-sm-3 text-end control-label col-form-label required">Start Date
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input type="date" th:field="*{startDate}"
+                                                       class="form-control date-inputmask" id="start-date"/>
+                                                <span th:errors="*{startDate}" class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row d-flex justify-content-between">
+                                            <label class="col-sm-3 text-end control-label col-form-label w-25 required">Salary
+                                                Range</label>
+                                            <div class="w-75">
+                                                <div class="d-flex justify-content-between ">
+                                                    <div class="col-sm-9 w-50 d-flex ">
+                                                        <label class="col-sm-3 text-end control-label col-form-label w-50" style="padding-right: 4px;">
+                                                            From</label>
+                                                        <input type="number" value="0" th:field="*{salaryFrom}"
+                                                               class="form-control w-50 form-input"
+                                                               id="salary-from"/>
+                                                    </div>
+                                                    <div class="col-sm-9 w-50 d-flex">
+                                                        <label class="col-sm-3 text-end control-label col-form-label w-50" style="padding-right: 4px;">
+                                                            To</label>
+                                                        <input type="number" value="0" th:field="*{salaryTo}"
+                                                               class="form-control w-50"
+                                                               id="salary-to"/>
+                                                    </div>
+                                                </div>
+                                                <span th:errors="*{salaryTo}" id="salary-error"
+                                                      class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="address" class="col-sm-3 text-end control-label col-form-label required">Working
+                                                address</label>
+                                            <div class="col-sm-9">
+                                                <input type="text" th:field="*{workingAddress}" class="form-control"
+                                                       id="address"
+                                                       placeholder="Type an address"/>
+                                                <span th:errors="*{workingAddress}"
+                                                      class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label required">Skills</label>
+                                            <div class="col-sm-9">
+                                                <select class="select2 form-select shadow-none mt-3" th:field="*{skill}"
+                                                        multiple="multiple" id="skill"
+                                                        style="height: 36px; width: 100%">
+                                                    <option th:each="skill : ${skills}" th:value="${skill}"
+                                                            th:text="${skill}">
+                                                    </option>
+                                                </select>
+                                                <span th:errors="*{skill}" class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="end-date"
+                                                   class="col-sm-3 text-end control-label col-form-label required">End Date
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <input type="date" th:field="*{endDate}"
+                                                       class="form-control date-inputmask" id="end-date"/>
+                                                <span th:errors="*{endDate}" class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label required">Benefits</label>
+                                            <div class="col-sm-9">
+                                                <select class="select2 form-select shadow-none mt-3" id="benefit"
+                                                        th:field="*{benefits}" multiple="multiple"
+                                                        style="height: 36px; width: 100%">
+                                                    <option th:each="benefit : ${benefits}" th:value="${benefit}"
+                                                            th:text="${benefit}">
+                                                    </option>
+                                                </select>
+                                                <span th:errors="*{benefits}" class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label required">Level</label>
+                                            <div class="col-md-9">
+                                                <select class="select2 form-select shadow-none" id="level"
+                                                        th:field="*{level}"
+                                                        style="width: 100%; height: 36px" multiple="multiple">
+                                                    <option th:each="level : ${levels}" th:value="${level}"
+                                                            th:text="${level}">Male
+                                                    </option>
+                                                </select>
+                                                <span th:errors="*{level}" class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 text-end control-label col-form-label">Description</label>
+                                            <div class="col-sm-9">
+                                                <textarea type="text" th:field="*{description}" class="form-control"
+                                                          id="descripstion"></textarea>
+                                                <span th:errors="*{description}"
+                                                      class="form-message text-danger"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top ">
+                                <div class="card-body">
+                                    <button type="submit" class="btn btn-success text-white">Submit</button>
+                                    <button type="reset" class="btn btn-warning">Reset</button>
+                                    <button onclick="history.back()" type="button" class="btn btn-danger">Cancel</button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<!--<div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"-->
+<!--     data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full" th:fragment="side-bar">-->
+    <aside class="left-sidebar" data-sidebarbg="skin5" th:fragment="side-bar">
+        <div class="scroll-sidebar">
+            <nav class="sidebar-nav">
+                <ul id="sidebarnav" class="pt-4">
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" aria-expanded="false" th:href="@{/home}"><i
+                                class="mdi mdi-home-outline"></i><span class="hide-menu">Home</span></a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/candidate}" aria-expanded="false"><i
+                                class="mdi mdi-account-multiple"></i><span class="hide-menu">Candidate</span></a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/job}" aria-expanded="false"><i
+                                class="mdi mdi-account-multiple"></i><span class="hide-menu">Job</span></a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/schedule}" aria-expanded="false"><i
+                                class="mdi mdi-comment-multiple-outline"></i><span class="hide-menu">Interview</span></a>
+                    </li>
+                    <li class="sidebar-item">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/offer}" aria-expanded="false"><i
+                                class="mdi mdi-note-outline"></i><span class="hide-menu">Offer</span></a>
+                    </li>
+                    <li class="sidebar-item" sec:authorize="hasRole('ADMIN')">
+                        <a class="sidebar-link waves-effect waves-dark sidebar-link" th:href="@{/user}" aria-expanded="false"><i
+                                class="mdi mdi-account-multiple" sec:authorize="hasRole('ADMIN')"></i><span class="hide-menu">User</span></a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+<!--</div>-->
+</body>
+</html>
